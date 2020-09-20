@@ -10,7 +10,7 @@
 
 ![](beginner_1.png)  
 
-    ответ: 1 папка texts  
+    Ответ: 1 папка - texts  
 
 ## Задания уровня “Intermediate”  
 
@@ -58,25 +58,64 @@ hdfs dfs -help touchz
 1. Создайте папку в корневой HDFS-папке Вашего пользователя, чтобы избежать конфликтов, на всякий
 случай используйте Ваш id (см. grades) в качестве префикса папки.  
 
+    hdfs dfs -mkdir dimarus  
+
 2. Создайте в созданной папке новую вложенную папку.  
+
+    hdfs dfs -mkdir dimarus/dimarus2  
 
 3. Что такое Trash в распределенной FS? Как сделать так, чтобы файлы удалялись сразу, минуя “Trash”?  
 
+   При удалении данных командой hdfs dfs -rm в распределенной FS они перемещаются в директорию Trash. Нужно поставить флаг -skipTrash, см. команду hdfs dfs -help rm.  
+
 4. Создайте пустой файл в подпапке из пункта 2.  
+
+    hdfs dfs -touchz dimarus/dimarus2/file.txt  
 
 5. Удалите созданный файл.  
 
+    hdfs dfs -rm -skipTrash dimarus/dimarus2/file.txt  
+    Deleted dimarus/dimarus2/file.txt  
+
 6. Удалите созданные папки.  
 
+    hdfs dfs -rmr dimarus  
+    rmr: DEPRECATED: Please use '-rm -r' instead.  
+    Deleted dimarus  
 
 ### См. флаги “-put”, “-cat”, “-tail”, “-distcp”  
 
 1. Используя команду “-distcp” скопируйте рассказ О’Генри “Дары Волхвов” henry.txt из
 s3://texts-bucket/henry.txt в новую папку на HDFS  
+
+    hadoop distcp henry.txt dimarus/henry.txt  
+
 2. Выведите содержимое HDFS-файла на экран.  
+
+    hdfs dfs -cat dimarus/henry.txt  
+
 3. Выведите содержимое нескольких последних строчек HDFS-файла на экран.  
+
+    hdfs dfs -tail dimarus/henry.txt  
+
+    или для конкретного количества строк  
+
+    hdfs dfs -cat dimarus/henry.txt | tail -n 5  
+
 4. Выведите содержимое нескольких первых строчек HDFS-файла на экран.  
+
+    hdfs dfs -cat dimarus/henry.txt | head -n 5  
+
 5. Переместите копию файла в HDFS на новую локацию.  
+
+    Удаление созданного ранее файла dimarus/henry.txt  
+    hdfs dfs -rm -skipTrash dimarus/henry.txt  
+
+    Непосредственно перемещение  
+    hdfs dfs -cp henry.txt dimarus/henry.txt  
+
+    Удаление всех созданных файлов и директорий, завершение секции “Intermediate”  
+    hdfs dfs -rm -r -skipTrash dimarus/  
 
 ## Задания уровня “Advanced”  
 
