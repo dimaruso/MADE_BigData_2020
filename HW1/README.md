@@ -88,7 +88,7 @@ hdfs dfs -help touchz
 1. Используя команду “-distcp” скопируйте рассказ О’Генри “Дары Волхвов” henry.txt из
 s3://texts-bucket/henry.txt в новую папку на HDFS  
 
-    hadoop distcp henry.txt dimarus/henry.txt  
+    hadoop distcp s3://texts-bucket/henry.txt dimarus/henry.txt  
 
 2. Выведите содержимое HDFS-файла на экран.  
 
