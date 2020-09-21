@@ -116,11 +116,13 @@ s3://texts-bucket/henry.txt в новую папку на HDFS
     hdfs dfs -mkdir dimarus2/  
     Непосредственно перемещение  
     hdfs dfs -cp dimarus/henry.txt dimarus2/henry.txt  
+    ```  
 
-    Удаление всех созданных файлов и директорий, завершение секции “Intermediate”  
-    hdfs dfs -rm -r -skipTrash dimarus/  
-    hdfs dfs -rm -r -skipTrash dimarus2/  
-    ```
+```
+Удаление всех созданных файлов и директорий, завершение секции “Intermediate”  
+hdfs dfs -rm -r -skipTrash dimarus/  
+hdfs dfs -rm -r -skipTrash dimarus2/  
+```
 
 ## Задания уровня “Advanced”  
 ```
@@ -140,18 +142,72 @@ s3://texts-bucket/henry.txt в новую папку на HDFS
     Replication 2 set: dimarus/henry.txt  
     Waiting for dimarus/henry.txt .... done  
 
-    Установка 5 репликаций прошла более чем за 2 часа  
+    Установка 5 репликаций не завершилась более чем за 2 часа  
     hdfs dfs -setrep -w 5 dimarus/henry.txt  
 
-    Replication 5 set: dimarus/henry.txt  
-    Waiting for dimarus/henry.txt  .......................................................................................................................................................................................... done  
+    Установка 3 репликаций прошла за 20 минут  
+    hdfs dfs -setrep -w 3 dimarus/henry.txt  
+
+    Replication 3 set: dimarus/henry.txt  
+    Waiting for dimarus/henry.txt .... done  
+
+    При дальнейшем уменьшении количества репликаций выводится предупреждение, о том что такая операция выполняется дольше увеличения количества репликаций.  
+
+    hdfs dfs -setrep -w 1 dimarus/henry.txt  
+
+    the waiting time may be long for DECREASING the number of replications
     ```
 3. Найдите информацию по файлу, блокам и их расположениям с помощью “hdfs fsck”  
     ```
-    hdfs dfs -fsck  
+    hdfs fsck dimarus/henry.txt -files -blocks -locations  
+
+    Connecting to namenode via http://ip-172-31-13-51.eu-west-1.compute.internal:50070/fsck?ugi=hadoop&files=1&blocks=1&locations=1&path=%2Fuser%2Fhadoop%2Fdimarus%2Fhenry.txt
+    FSCK started by hadoop (auth:SIMPLE) from /172.31.13.51 for path /user/hadoop/dimarus/henry.txt at Mon Sep 21 19:11:34 UTC 2020
+    /user/hadoop/dimarus/henry.txt 11180 bytes, 1 block(s):  OK
+    0. BP-693885413-172.31.13.51-1600268446358:blk_1073743676_3464 len=11180 Live_repl=1 [DatanodeInfoWithStorage[172.31.13.237:50010,DS-6dc8ab2f-f15d-4128-85ec-8740e30f8b07,DISK]]
+
+    Status: HEALTHY
+    Total size:    11180 B
+    Total dirs:    0
+    Total files:   1
+    Total symlinks:                0
+    Total blocks (validated):      1 (avg. block size 11180 B)
+    Minimally replicated blocks:   1 (100.0 %)
+    Over-replicated blocks:        0 (0.0 %)
+    Under-replicated blocks:       0 (0.0 %)
+    Mis-replicated blocks:         0 (0.0 %)
+    Default replication factor:    1
+    Average block replication:     1.0
+    Corrupt blocks:                0
+    Missing replicas:              0 (0.0 %)
+    Number of data-nodes:          2
+    Number of racks:               1
+    FSCK ended at Mon Sep 21 19:11:34 UTC 2020 in 5 milliseconds
+
+
+    The filesystem under path '/user/hadoop/dimarus/henry.txt' is HEALTHY  
     ```
 4. Получите информацию по любому блоку из п.2 с помощью "hdfs fsck -blockId”.
 Обратите внимание на Generation Stamp (GS number).  
     ```
-    hdfs dfs -blockId  
-    ```
+    hdfs fsck -blockId blk_1073743676  
+
+    Connecting to namenode via http://ip-172-31-13-51.eu-west-1.compute.internal:50070/fsck?ugi=hadoop&blockId=blk_1073743676+&path=%2F
+    FSCK started by hadoop (auth:SIMPLE) from /172.31.13.51 at Mon Sep 21 19:29:48 UTC 2020
+
+    Block Id: blk_1073743676
+    Block belongs to: /user/hadoop/dimarus/henry.txt
+    No. of Expected Replica: 1
+    No. of live Replica: 1
+    No. of excess Replica: 0
+    No. of stale Replica: 0
+    No. of decommissioned Replica: 0
+    No. of decommissioning Replica: 0
+    No. of corrupted Replica: 0
+    Block replica on datanode/rack: ip-172-31-13-237.eu-west-1.compute.internal/default-rack is HEALTHY
+    ```  
+
+```
+Удаление всех созданных файлов и директорий, завершение секции “Advanced”  
+hdfs dfs -rm -r -skipTrash dimarus/  
+```
