@@ -140,16 +140,7 @@ hdfs dfs -rm -r -skipTrash dimarus2/
     hdfs dfs -setrep -w 2 dimarus/henry.txt  
 
     Replication 2 set: dimarus/henry.txt  
-    Waiting for dimarus/henry.txt .... done  
-
-    Установка 5 репликаций не завершилась более чем за 2 часа  
-    hdfs dfs -setrep -w 5 dimarus/henry.txt  
-
-    Установка 3 репликаций прошла за 20 минут  
-    hdfs dfs -setrep -w 3 dimarus/henry.txt  
-
-    Replication 3 set: dimarus/henry.txt  
-    Waiting for dimarus/henry.txt .... done  
+    Waiting for dimarus/henry.txt .... done    
 
     При дальнейшем уменьшении количества репликаций выводится предупреждение, о том что такая операция выполняется дольше увеличения количества репликаций.  
 
