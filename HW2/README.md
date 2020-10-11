@@ -1,4 +1,4 @@
-# Заданиe на MapReduce  
+# Hadoop ecosystem and MapReduce
 
 1. Загрузите [датасет](https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data) по ценам на жилье Airbnb, доступный на kaggle.com.  
 

@@ -1,3 +1,5 @@
+# Introduction to BigData
+
 ## Задания уровня “Beginner”  
 
 1) Пробросить порт (port forwarding) для доступа к HDFS Web UI  
@@ -13,7 +15,8 @@
     Ответ: 1 папка - texts  
     ```
 
-## Задания уровня “Intermediate”  
+## Задания уровня “Intermediate”
+
 ```
 ssh -i emr.pem hadoop@ec2-3-249-21-2.eu-west-1.compute.amazonaws.com
 ```
@@ -40,7 +43,8 @@ hdfs dfs -help ls
     ```
     actual  
     ```
-### См. флаг “-du“  
+### См. флаг “-du“
+
 ```
 hdfs dfs -help du  
 ```
@@ -51,7 +55,9 @@ hdfs dfs -help du
 
     714  /data/texts/  
     ```
-### См. флаги “-mkdir” и “-touchz“  
+
+### См. флаги “-mkdir” и “-touchz“
+
 ```
 hdfs dfs -help mkdir  
 hdfs dfs -help touchz  
@@ -87,7 +93,7 @@ hdfs dfs -help touchz
     Deleted dimarus  
     ```
 
-### См. флаги “-put”, “-cat”, “-tail”, “-distcp”  
+### См. флаги “-put”, “-cat”, “-tail”, “-distcp”
 
 1. Используя команду “-distcp” скопируйте рассказ О’Генри “Дары Волхвов” henry.txt из
 s3://texts-bucket/henry.txt в новую папку на HDFS  
@@ -124,7 +130,8 @@ hdfs dfs -rm -r -skipTrash dimarus/
 hdfs dfs -rm -r -skipTrash dimarus2/  
 ```
 
-## Задания уровня “Advanced”  
+## Задания уровня “Advanced”
+
 ```
 Полезные флаги:  
 ● Для “hdfs dfs”, см. “-setrep -w”  
