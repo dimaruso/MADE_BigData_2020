@@ -7,3 +7,4 @@
 1. [Introduction to BigData](HW1)
 2. [Hadoop ecosystem and MapReduce](HW2)
 3. [HiveQL](HW3)
+4. [Hadoop local](HW4)
