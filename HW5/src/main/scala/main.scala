@@ -49,7 +49,7 @@ class LinearRegression() {
 object Linear_Regression {
   def main(args: Array[String]) {
     val true_weight = DenseVector[Double](1.0, -2.0, 3.0, 4.0)
-    val (x, y) = generate_data(true_weight)//load_data(pth)
+    val (x, y) = generate_data(true_weight)
     val lr = 0.001
     val max_iter = 50000
 
@@ -70,7 +70,7 @@ object Linear_Regression {
 
     val preds = model.predict(x)
     for (i <- 0 to preds.length - 1){
-      println(y(i), " ", preds(i))
+      println(y(i), preds(i))
     }
   }
 
