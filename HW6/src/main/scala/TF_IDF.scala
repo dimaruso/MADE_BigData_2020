@@ -19,7 +19,7 @@ object TF_IDF {
       .option("header", "true")
       .option("inferSchema", "true")
       .csv(input)
-      .select(regexp_replace(lower(col("Review")), "[^\\w\\s-]", "").as("handled_text"))
+      .select(regexp_replace(lower(col("Review")), "[^\\w\\s-]", ""))
 
     def textToMap(text : String) : HashMap[String, Int] = {
       var newMap = new HashMap[String, Int]()
@@ -34,12 +34,12 @@ object TF_IDF {
       newMap
     }
 
-    val data_map = data
+    val dataMap = data
       .map(x => textToMap(x(0).toString()))
       .withColumn("review_id", monotonically_increasing_id())
       .select(col("review_id"), explode(col("value")).as(Array("word", "number")))
 
-    val top100IDF = data_map
+    val top100IDF = dataMap
       .groupBy(col("word"))
       .agg(count(col("review_id")) as "count")
       .orderBy(desc("count"))
@@ -51,7 +51,7 @@ object TF_IDF {
 
     val reviewWindow = Window.partitionBy("review_id")
 
-    val top100TF = data_map
+    val top100TF = dataMap
       .withColumn("len", sum("number") over reviewWindow)
       .filter(col("word") isin (top100:_*))
       .withColumn("tf", col("number") / col("len"))
