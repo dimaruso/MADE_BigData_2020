@@ -4,7 +4,6 @@ import org.apache.spark.sql.expressions.Window
 import scala.collection.mutable.HashMap
 
 object TF_IDF {
-  System.setProperty("hadoop.home.dir", "C:/winutils/")
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder()
       .master("local[*]")
@@ -13,7 +12,6 @@ object TF_IDF {
     import spark.implicits._
 
     val input : String = "data/tripadvisor_hotel_reviews.csv"
-    val output : String = "data"
 
     val data = spark.read
       .option("header", "true")
@@ -67,11 +65,6 @@ object TF_IDF {
       .pivot(col("word"))
       .sum("tfidf")
 
-    result
-      .write
-      .mode("overwrite")
-      .format("parquet")
-      .option("header","true")
-      .save(output)
+    result.show()
   }
 }
